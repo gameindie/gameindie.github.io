@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+        <title>Game Indie</title>
+        <description>Game Indie - Game Indie</description>
+        <link>http://mazstudio.github.io</link>
+        <link>http://mazstudio.github.io</link>
+        <lastBuildDate>2015-09-01T10:09:36+09:00</lastBuildDate>
+        <pubDate>2015-09-01T10:09:36+09:00</pubDate>
+        <ttl>1800</ttl>
+
+
+        <item>
+                <title>포스팅 테스트!</title>
+                <description>&lt;p&gt;스태틱 블로그 개설 테스트&lt;/p&gt;
+</description>
+                <link>http://mazstudio.github.io/chat/2015/09/01/the-first-post</link>
+                <guid>http://mazstudio.github.io/chat/2015/09/01/the-first-post</guid>
+                <pubDate>2015-09-01T08:36:00+09:00</pubDate>
+        </item>
+
+
+</channel>
+</rss>

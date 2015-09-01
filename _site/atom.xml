@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Game Indie</title>
+ <link href="http://mazstudio.github.io/" rel="self"/>
+ <link href="http://mazstudio.github.io"/>
+ <updated>2015-09-01T10:09:36+09:00</updated>
+ <id>http://mazstudio.github.io</id>
+ <author>
+   <name>Game Indie</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>포스팅 테스트!</title>
+   <link href="http://mazstudio.github.io/chat/2015/09/01/the-first-post"/>
+   <updated>2015-09-01T08:36:00+09:00</updated>
+   <id>http://mazstudio.github.io/chat/2015/09/01/the-first-post</id>
+   <content type="html">&lt;p&gt;스태틱 블로그 개설 테스트&lt;/p&gt;
+</content>
+ </entry>
+ 
+ 
+</feed>

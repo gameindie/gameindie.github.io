@@ -4,5 +4,5 @@ title: About Me
 header: About Me
 group: navigation
 ---
- * **Name:** Maz Studio
- * **Email:** [mazisreal@gmail.com](mailto:mazisreal@gmail.com)
+ * **Name:** Game Indie
+ * **Email:** [gameindie.studio@gmail.com](mailto:gameindie.studio@gmail.com)
