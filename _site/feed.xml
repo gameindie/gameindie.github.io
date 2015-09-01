@@ -4,7 +4,7 @@
   <title type="text" xml:lang="en"></title>
   <link type="application/atom+xml" href="/feed.xml" rel="self"/>
   <link type="text/html" href="" rel="alternate"/>
-  <updated>2015-09-01T10:09:36+09:00</updated>
+  <updated>2015-09-01T21:23:20+09:00</updated>
   <id>/all_feed</id>
   <author>
     <name></name>
@@ -17,6 +17,188 @@
     <updated>2015-09-01T08:36:00+09:00</updated>
     <id>/chat/2015/09/01/the-first-post</id>
     <content type="html">&lt;p&gt;스태틱 블로그 개설 테스트&lt;/p&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>React.js + gulp,webpack 환경설정</title>
+    <link href="/web/2015/09/01/react-environment-setting"/>
+    <updated>2015-09-01T08:36:00+09:00</updated>
+    <id>/web/2015/09/01/react-environment-setting</id>
+    <content type="html">&lt;h1 id=&quot;reactjs--gulp-webpack-&quot;&gt;React.js + gulp, webpack 환경설정&lt;/h1&gt;
+&lt;p&gt;React.js , gulp, webpack 환경설정을 ES6 문법으로 세팅하는 법입니다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;설치
+    &lt;ul&gt;
+      &lt;li&gt;글로벌
+        &lt;ul&gt;
+          &lt;li&gt;npm : https://github.com/npm/npm&lt;/li&gt;
+          &lt;li&gt;gulp : &lt;code&gt;npm install -g gulp&lt;/code&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;프로젝트
+        &lt;ul&gt;
+          &lt;li&gt;npm초기화 : &lt;code&gt;npm init&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;gulp 프로젝트에 세팅 : &lt;code&gt;npm install --save-dev gulp&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;gitignore : https://github.com/github/gitignore/blob/master/Node.gitignore&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;gulpfile 작성
+    &lt;ul&gt;
+      &lt;li&gt;gulpfile.js 가 필요하다.&lt;/li&gt;
+      &lt;li&gt;ES6문법지원을 위하여, gulpfile.babel.js 로 파일을 만든다.&lt;/li&gt;
+      &lt;li&gt;babel 설치 : &lt;code&gt;npm install --save-dev babel&lt;/code&gt; 
+              &lt;code&gt;npm install --save-dev babel-core&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;gulpfile.babel.js 내용작성&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;  &#39;use strict&#39;;
+		
+  import gulp from &#39;gulp&#39;;
+		
+  //default task 작성
+  gulp.task(&#39;default&#39;, []);
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;webpack 설정 : 한 단계마다 &lt;code&gt;gulp&lt;/code&gt; 명령어를 치면서, 어디가 잘못 되었는지 확인하면서 진행가능.
+    &lt;ol&gt;
+      &lt;li&gt;파일/폴더구조 세팅
+        &lt;ul&gt;
+          &lt;li&gt;src/ : 빌드 전 파일들이 위치하는 곳&lt;/li&gt;
+          &lt;li&gt;dist/ : 빌드 후 결과물&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;webpack 설치
+        &lt;ul&gt;
+          &lt;li&gt;gulp-webpack 이름이 webpack-stream으로 변경되었다.&lt;/li&gt;
+          &lt;li&gt;&lt;code&gt;npm install --save-dev webpack-stream&lt;/code&gt;&lt;/li&gt;
+          &lt;li&gt;webpack에서의 babel loader 적용을 위하여 설치&lt;/li&gt;
+          &lt;li&gt;&lt;code&gt;npm install --save-dev babel-loader&lt;/code&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;webpack.config.js 작성&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt; &#39;use strict&#39;;
+		
+ export default {
+     //시작될 js모듈이름
+     entry: &#39;./src/entry&#39;,
+     output: {
+     	 // 빌드 후 output js 파일이름
+         filename: &#39;bundle.js&#39;
+     },
+     module: {
+         loaders: [
+             {
+             	   // load할 파일정규식
+                 test: /\.js$/,
+                 // load제외할 폴더/파일
+                 exclude: /(node_modules)/,
+                 loader: &#39;babel&#39;
+             }
+         ]
+     }
+ };
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;gulpfile.babel.js 수정&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt; &#39;use strict&#39;;
+		
+ import gulp from &#39;gulp&#39;;
+ import webpack from &#39;webpack-stream&#39;;
+ import webpackConfig from &#39;./webpack.config&#39;;
+		
+ // webpack 빌드, output destination 설정
+ gulp.task(&#39;webpack&#39;, () =&amp;gt; {
+     return webpack(webpackConfig).pipe(gulp.dest(&#39;./dist&#39;));
+ });
+		
+ // default task 작성
+ gulp.task(&#39;default&#39;, [&#39;webpack&#39;]);
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;gulp&lt;/code&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;React.js
+    &lt;ol&gt;
+      &lt;li&gt;설치 ( –save-dev 가 아니다! )
+ &lt;code&gt;npm install --save react&lt;/code&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Refusing to install react as a dependency of itself
+            &lt;ul&gt;
+              &lt;li&gt;이와 같은 에러가 났을 떄는, package.json안에 어떤 필드가 ‘react’ 인지 확인하고 수정하면 된다. 필자는 name이 react 라서 문제를 겪었다.&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;테스트를 위한 src/index.html 파일 생성 ( 빌드된 output파일을 load 하도록 작성, 추후 React Component 가 붙을 div 도 생성)&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt; &amp;lt;!DOCTYPE html&amp;gt;
+ &amp;lt;html lang=&quot;en&quot;&amp;gt;
+ &amp;lt;head&amp;gt;
+     &amp;lt;meta charset=&quot;UTF-8&quot;&amp;gt;
+     &amp;lt;title&amp;gt;React.js&amp;lt;/title&amp;gt;
+ &amp;lt;/head&amp;gt;
+ &amp;lt;body&amp;gt;
+     &amp;lt;div id=&quot;app&quot;&amp;gt;&amp;lt;/div&amp;gt;
+     &amp;lt;script type=&quot;text/javascript&quot; src=&quot;bundle.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+ &amp;lt;/body&amp;gt;
+ &amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;gulpfile.babel.js에 index.html 을 dist 로 복사하는 자동화명령 추가.&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt; &#39;use strict&#39;;
+		
+ import gulp from &#39;gulp&#39;;
+ import webpack from &#39;webpack-stream&#39;;
+ import webpackConfig from &#39;./webpack.config&#39;;
+		
+ gulp.task(&#39;copy&#39;, () =&amp;gt;  {
+     return gulp.src(&#39;./src/index.html&#39;).pipe(gulp.dest(&#39;./dist&#39;));
+ })
+		
+ gulp.task(&#39;webpack&#39;, () =&amp;gt; {
+     return webpack(webpackConfig).pipe(gulp.dest(&#39;./dist&#39;));
+ });
+		
+ // default task 작성
+ gulp.task(&#39;default&#39;, [&#39;copy&#39;, &#39;webpack&#39;]);
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;entry.js에 React.js 테스트코드 작성&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt; &#39;use strict&#39;;
+		
+ import React from &#39;react&#39;;
+			
+ class HelloWorld extends React.Component {
+     render() {
+         return (
+             &amp;lt;div&amp;gt; Hello World &amp;lt;/div&amp;gt;
+         )
+     }
+ }
+			
+ React.render(&amp;lt;HelloWorld/&amp;gt;, document.getElementById(&#39;app&#39;));
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;gulp&lt;/code&gt; 후 확인! Hello World!&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 </content>
   </entry>
   

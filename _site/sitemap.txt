@@ -14,3 +14,4 @@ http://mazstudio.github.io/sitemap.xml
 http://mazstudio.github.io/tags.html
 
 http://mazstudio.github.io/chat/2015/09/01/the-first-post
+http://mazstudio.github.io/web/2015/09/01/react-environment-setting

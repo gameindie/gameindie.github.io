@@ -4,6 +4,12 @@
         "title": "포스팅 테스트!",
         "url": "/chat/2015/09/01/the-first-post",
         "date": "Tuesday 1 September 2015"
+    } , 
+    
+    {
+        "title": "React.js + gulp,webpack 환경설정",
+        "url": "/web/2015/09/01/react-environment-setting",
+        "date": "Tuesday 1 September 2015"
     } 
     
 ]
