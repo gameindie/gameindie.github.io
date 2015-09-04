@@ -7,7 +7,7 @@ tags: javascript, react, gulp, webpack
 comments: true
 ---
 
-#React.js + gulp, webpack 환경설정
+
 React.js , gulp, webpack 환경설정을 ES6 문법으로 세팅하는 법입니다.
 
 1. 설치
