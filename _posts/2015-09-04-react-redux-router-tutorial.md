@@ -134,6 +134,7 @@ React에 Redux, React에 Router 를 각각 붙이는 것은 어렵지 않습니�
 				<Provider store={store}>
 					{() => Root 컴포넌트 }
 				</Provider>
+				
 			- 항상 Root 컴포넌트를 wrapping 하고 있어야함.
 			- 이 컴포넌트로 Wrapping 하면, 자식~리프 자식들까지 context로써 전달된 redux-store에 접근가능함.
 			- 현재는 react 0.13의 컨텍스트 이슈때문에 child를 함수로 가져야한다. 0.14부터는 이러지 않아도 될 것이다.
