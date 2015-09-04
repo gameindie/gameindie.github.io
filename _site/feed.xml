@@ -4,7 +4,7 @@
   <title type="text" xml:lang="en"></title>
   <link type="application/atom+xml" href="/feed.xml" rel="self"/>
   <link type="text/html" href="" rel="alternate"/>
-  <updated>2015-09-01T21:23:20+09:00</updated>
+  <updated>2015-09-04T16:40:17+09:00</updated>
   <id>/all_feed</id>
   <author>
     <name></name>
@@ -12,21 +12,500 @@
 
   
   <entry>
-    <title>포스팅 테스트!</title>
-    <link href="/chat/2015/09/01/the-first-post"/>
-    <updated>2015-09-01T08:36:00+09:00</updated>
-    <id>/chat/2015/09/01/the-first-post</id>
-    <content type="html">&lt;p&gt;스태틱 블로그 개설 테스트&lt;/p&gt;
+    <title>React.js - Redux - Router 튜토리얼</title>
+    <link href="/web/2015/09/04/react-redux-router-tutorial"/>
+    <updated>2015-09-04T14:36:00+09:00</updated>
+    <id>/web/2015/09/04/react-redux-router-tutorial</id>
+    <content type="html">&lt;p&gt;React에 Redux, React에 Router 를 각각 붙이는 것은 어렵지 않습니다. 하지만 세 개를 동시에 붙여보면 잘 안되기도하고, 여기저기 예제들도 다 달라서 어려움이 많습니다.&lt;/p&gt;
+
+&lt;p&gt;가장 큰 문제는 React-Router가 현재 0.13버전이 npm 에 등록되어있고, React 1.0 대응버전이 베타로 나와있기 때문입니다. 대부분의 예제는 1.0.0-beta3으로 되어있어서, 자료를 찾는데 어려움이 많았는데, 중간중간 버전에 따라 정리해보았습니다.&lt;/p&gt;
+
+&lt;p&gt;(본 예제는 redux-react-router 라이브러리와 상관없는 내용입니다. React, Redux, React-Router를 동시에 사용하는 방법에대한 내용입니다.)&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;React-Router
+    &lt;ol&gt;
+      &lt;li&gt;설치
+        &lt;ul&gt;
+          &lt;li&gt;0.13 버전
+            &lt;ul&gt;
+              &lt;li&gt;&lt;code&gt;npm install --save react-router&lt;/code&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;1.0.0-beta3
+            &lt;ul&gt;
+              &lt;li&gt;&lt;code&gt;npm intsall --save react-router@1.0.0-beta3&lt;/code&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;components폴더 생성
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;App.js 작성 ( route root )&lt;/p&gt;
+
+            &lt;pre&gt;&lt;code&gt;  &#39;use strinct&#39;;
+			
+  import React from &#39;react&#39;;
+  import {RouteHandler} from &#39;react-router&#39;;
+			
+  class App extends React.Component {
+      render() {
+          return (
+              &amp;lt;div&amp;gt; &amp;lt;RouteHandler/&amp;gt; &amp;lt;/div&amp;gt;
+          )
+      }
+  }
+			
+  export default App;
+&lt;/code&gt;&lt;/pre&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;HelloWorld.js작성 ( default route )&lt;/p&gt;
+
+            &lt;pre&gt;&lt;code&gt;  &#39;use strict&#39;;
+			
+  import React from &#39;react&#39;;
+			
+  class HelloWorld extends React.Component {
+      render() {
+      	return (
+         	&amp;lt;div&amp;gt; Hello World! &amp;lt;/div&amp;gt;
+         )
+      }
+  }
+			
+  export default HelloWorld;
+&lt;/code&gt;&lt;/pre&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;Route.js 작성 ( route 내용 작성 )&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;0.13&lt;/p&gt;
+
+                &lt;pre&gt;&lt;code&gt;  &#39;use strict&#39;;
+				
+  import {App, HelloWorld} from &#39;./index&#39;;
+  import {DefaultRoute, Route} from &#39;react-router&#39;;
+  import React from &#39;react&#39;;
+				
+  export default (
+      &amp;lt;Route handler = {App} path = &#39;/&#39;&amp;gt;
+          &amp;lt;DefaultRoute handler={HelloWorld}/&amp;gt;
+      &amp;lt;/Route&amp;gt;
+  );
+&lt;/code&gt;&lt;/pre&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;1.0.0 beta ( context 이슈 때문에, 반드시 함수로 리턴해야한다. )&lt;/p&gt;
+
+                &lt;pre&gt;&lt;code&gt;  &#39;use strict&#39;;
+				
+  import {App, HelloWorld} from &#39;./index&#39;;
+  import React from &#39;react&#39;;
+  import {Router, Route} from &#39;react-router&#39;;
+				
+  function RouteWrapper(history) {
+      return (
+          &amp;lt;Router history={history}&amp;gt;
+              &amp;lt;Route component={App}&amp;gt;
+                  &amp;lt;Route path=&quot;/&quot; component={HelloWorld} /&amp;gt;
+              &amp;lt;/Route&amp;gt;
+          &amp;lt;/Router&amp;gt;
+      );
+  };
+				
+  export default RouteWrapper;
+&lt;/code&gt;&lt;/pre&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;index.js 작성 ( components폴더를 require 했을 때, export할 모듈리스트 )&lt;/p&gt;
+
+            &lt;pre&gt;&lt;code&gt;  &#39;use strict&#39;;
+			
+  export {default as App} from &#39;./App&#39;;
+  export {default as HelloWorld} from &#39;./HelloWorld&#39;;
+  // (0.13)
+  export {default as Route} from &#39;./Route&#39;;
+  // (1.0.0)
+  export {default as RouteWrapper} from &#39;./Route&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;entry에 router 설정
+        &lt;ul&gt;
+          &lt;li&gt;0.13 은 Router.run을 사용하고, 1.0.0 은 React.render를 직접호출하되, Router 컴포넌트를 사용하는 것이 다르다.&lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;Router 컴포넌트에 history를 넣어주지않으면 &lt;code&gt;Uncaught Error: Invariant Violation: Server-side &amp;lt;Router&amp;gt;s need location, branch, params, and components props. Try using Router.run to get all the props you need&lt;/code&gt; 과 같은 에러가 난다.&lt;/p&gt;
+
+            &lt;pre&gt;&lt;code&gt;  &#39;use strict&#39;;
+			
+  import React from &#39;react&#39;;
+  // (0.13)
+      import {Route} from &#39;./components&#39;;
+      import Router from &#39;react-router&#39;;
+  // (1.0.0)beta
+      import BrowserHistory from &#39;react-router/lib/BrowserHistory&#39;
+      import {RouteWrapper} from &#39;./components&#39;;
+						
+  // (0.13)
+      Router.run(Route, (Handler) =&amp;gt; {
+          React.render(&amp;lt;Handler/&amp;gt;
+          , document.getElementById(&#39;app&#39;));
+      })
+			
+  // (1.0.0) beta
+      const history = new BrowserHistory();
+      React.render(
+          RouteWrapper(history)
+    		, document.getElementById(&#39;app&#39;)
+    	);
+&lt;/code&gt;&lt;/pre&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Hello World 출력확인&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Redux with React.js
+    &lt;ol&gt;
+      &lt;li&gt;설치
+        &lt;ul&gt;
+          &lt;li&gt;&lt;code&gt;npm install --save react-redux&lt;/code&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;React-Redux 주요 키워드
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;p&gt;Provider 컴포넌트&lt;/p&gt;
+
+            &lt;pre&gt;&lt;code&gt; &amp;lt;Provider store={store}&amp;gt;
+     {() =&amp;gt; Root 컴포넌트 }
+ &amp;lt;/Provider&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;항상 Root 컴포넌트를 wrapping 하고 있어야함.&lt;/li&gt;
+              &lt;li&gt;이 컴포넌트로 Wrapping 하면, 자식~리프 자식들까지 context로써 전달된 redux-store에 접근가능함.&lt;/li&gt;
+              &lt;li&gt;현재는 react 0.13의 컨텍스트 이슈때문에 child를 함수로 가져야한다. 0.14부터는 이러지 않아도 될 것이다.&lt;/li&gt;
+              &lt;li&gt;컴포넌트에 contextType를 세팅하면, store접근가능 한 것 확인함.&lt;/li&gt;
+              &lt;li&gt;context자체는 undocumented feature임.&lt;/li&gt;
+              &lt;li&gt;contextType을 이용해 store에 직접접근할 수 있지만, connect 함수/데코레이터를 이용해 컴포넌트에 노출시키고 싶은 변수만 노출 시키거나, dispatch를 하거나 하는 것이 가능하다.&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;connect&lt;/p&gt;
+
+            &lt;pre&gt;&lt;code&gt; // dispatch만 props에 add
+ export default connect()(컴포넌트이름)
+ // state에있는 변수를 현 컴포넌트.props에 expose ( subscribe 됨 )
+ export default connect(state=&amp;gt;{ return { value:state.value }; })(컴포넌트이름)
+&lt;/code&gt;&lt;/pre&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;component와, redux store를 연결함. ( 내부적으로 Provider에서 넘겨준 store를 context를 이용하여 사용한다는 것임 )&lt;/li&gt;
+              &lt;li&gt;store의 dispatch function을 컴포넌트의 props에 add시켜줌.&lt;/li&gt;
+              &lt;li&gt;dumb컴포넌트를 smart컴포넌트로 바꾸는 중요키워드
+                &lt;ul&gt;
+                  &lt;li&gt;참고 : https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+              &lt;li&gt;decorator, 함수 형태로 제공된다.&lt;/li&gt;
+              &lt;li&gt;decorator는 experimental이다.&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;Redux 붙이기 ( redux 는 react-redux 에서 dependency로 설치된다 )
+        &lt;ol&gt;
+          &lt;li&gt;Reducer, Store 생성
+            &lt;ul&gt;
+              &lt;li&gt;기본적으로 이전 포스트를 참고하면 됨.&lt;/li&gt;
+              &lt;li&gt;튜토리얼 따라하시는 분을 위해 test용 reducer, store 첨부
+                &lt;ul&gt;
+                  &lt;li&gt;
+                    &lt;p&gt;entry.js&lt;/p&gt;
+
+                    &lt;pre&gt;&lt;code&gt;  import {createStore} from &#39;redux&#39;;
+  function testReducer(state = {}, action) {
+      switch (action.type) {
+          default:
+              return state;
+      }
+  }
+					
+  const store = createStore(testReducer);
+&lt;/code&gt;&lt;/pre&gt;
+                  &lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;Provider 컴포넌트 추가
+            &lt;ul&gt;
+              &lt;li&gt;RootComponent 를 Wrapping 하는 Provider 컴포넌트를 만들고, store를 던져주면 완성이다.&lt;/li&gt;
+              &lt;li&gt;RootComponent란 별게 아니고, 자신의 App에 최상단 컴포넌트를 말하는데, 사실 위치는 상관이없고, context가 필요한 컴포넌트 상단에 있기만 하면 된다.&lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;(중요) Provider 컴포넌트의 child인 Root Component는 현재(React 0.13) function형태로 들어가야한다! 그래야 컴포넌트에서 store를 사용할 수 있다. 0.14부터는 이렇게 사용안해도 될 것이라고 예상한다고 한다.&lt;/p&gt;
+
+                &lt;ul&gt;
+                  &lt;li&gt;0.13&lt;/li&gt;
+                  &lt;li&gt;
+                    &lt;p&gt;만약, Routing이 잘 안된다면 https://github.com/rackt/react-redux -&amp;gt; readme파일에서 routerState로 검색해서, routerState를 Handler 컴포넌트의 prop으로 넣어주면 된다.&lt;/p&gt;
+
+                    &lt;pre&gt;&lt;code&gt;  import {Provider} from &#39;react-redux&#39;;
+  Router.run(Route, (Handler) =&amp;gt; {
+      React.render(
+      &amp;lt;Provider store={store}&amp;gt;
+      	{() =&amp;gt; &amp;lt;Handler/&amp;gt; }
+      &amp;lt;/Provider&amp;gt;
+      , document.getElementById(&#39;app&#39;));
+  })				
+&lt;/code&gt;&lt;/pre&gt;
+                  &lt;/li&gt;
+                  &lt;li&gt;
+                    &lt;p&gt;1.0.0 beta3&lt;/p&gt;
+
+                    &lt;pre&gt;&lt;code&gt;  import {Provider} from &#39;react-redux&#39;;
+  React.render(
+      &amp;lt;Provider store={store}&amp;gt;
+          {() =&amp;gt; RouteWrapper(history) }
+      &amp;lt;/Provider&amp;gt;
+      , document.getElementById(&#39;app&#39;)
+  );
+&lt;/code&gt;&lt;/pre&gt;
+                  &lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;Hello World 컴포넌트를 Smart하게 만들자.
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;components/HelloWorld.js&lt;/p&gt;
+
+                &lt;pre&gt;&lt;code&gt;  &#39;use strict&#39;;
+				
+  import React from &#39;react&#39;;
+  import {connect} from &#39;react-redux&#39;;
+				
+  class HelloWorld extends React.Component {
+      render() {
+          const {dispatch, state} = this.props;
+          console.log(dispatch);
+          console.log({state});
+          return (
+              &amp;lt;div&amp;gt;Hello World!&amp;lt;/div&amp;gt;
+          )
+      }
+  }
+  export default connect(state =&amp;gt; { return ( { state: state } ); })(HelloWorld);
+&lt;/code&gt;&lt;/pre&gt;
+              &lt;/li&gt;
+              &lt;li&gt;console.log 로, dispatch, state를 사용할 수 있음을 볼 수 있다.&lt;/li&gt;
+              &lt;li&gt;이제 필요한 기능을 Redux를 사용하여 구현할 수 있을 것이다.&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>Redux 이해</title>
+    <link href="/web/2015/09/04/redux"/>
+    <updated>2015-09-04T11:15:00+09:00</updated>
+    <id>/web/2015/09/04/redux</id>
+    <content type="html">&lt;h2 id=&quot;redux&quot;&gt;Redux&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;React.js를 접할 때, Flux에 대해서 들어보았을 것이다. Flux는, Facebook 에서 제시한, undirectional data flow를 지향하는 architecture이다. 어떠한 라이브러리를 제공한 것이 아니라, 개념만 제시한 것이다.&lt;/li&gt;
+  &lt;li&gt;그래서, Flux 를 구현한 여러 라이브러리가 github에 올라와있는데, Flux자체를 개선시키고, 단순화한 Redux가 인기이다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;단순하고, 사용하기 쉽고, async에 대한 대비가 되어있어서 괜찮은 것 같다.&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;h3 id=&quot;gist&quot;&gt;gist&lt;/h3&gt;
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;앱의 모~든 state는 store안에 있는 하나의 object tree안에 저장된다.&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;이 state tree를 변화시키는는 유일한 방법은 action을 emit하는 것이다.&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;액션이 어떻게 state tree 변화시키는지를 정의하려면, pure reducers를 작성하면된다.&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;redux는 dispatcher 개념이 없다. event emitter대신에, pure function(reducer)에 의존하고 있기 때문이다.&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;중요) Redux는 사용자가 data를 변경하지 않는다고 가정하고 동작한다. reducer안에서는 반드시 새로운 오브젝트를 리턴해야한다. es7 spread syntax(…)을 이용하면 편하다.&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;h3 id=&quot;actions-reducers-store&quot;&gt;Actions, Reducers, Store&lt;/h3&gt;
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;h4 id=&quot;actions&quot;&gt;Actions&lt;/h4&gt;
+            &lt;ul&gt;
+              &lt;li&gt;App-&amp;gt;Store로 보내는 정보.&lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;ex)&lt;/p&gt;
+
+                &lt;pre&gt;&lt;code&gt;  // action
+  {
+    type: &#39;ADD_TODO&#39;,
+    text: &#39;Build my first Redux app&#39;
+  }
+&lt;/code&gt;&lt;/pre&gt;
+              &lt;/li&gt;
+              &lt;li&gt;javascript object와 동일하며, string type의 ‘type’필드는 컨벤션으로 꼭 들어가있어야한다. string contants로 정의되며, 앱이 커지면 모듈로 나눠도 된다.&lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;ex)&lt;/p&gt;
+
+                &lt;pre&gt;&lt;code&gt;  // actionTypes.js
+  export const ADD_TODO = &#39;ADD_TODO&#39;;
+				
+  // otherfile
+  import { ADD_TODO } from &#39;../actionTypes&#39;;
+&lt;/code&gt;&lt;/pre&gt;
+              &lt;/li&gt;
+              &lt;li&gt;Action Creators는, action을 만들기 위한 function이다. Flux에서는, action creator안에서 dispatch를 하기때문에, side effect가 발생할 수 있다. Redux는 pure function 이라서, 그런 것이 없다.&lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;ex)&lt;/p&gt;
+
+                &lt;pre&gt;&lt;code&gt;  // action creator
+  function addTodo(text) {
+    return {
+      type: ADD_TODO,
+      text
+    };
+  }
+&lt;/code&gt;&lt;/pre&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;실제로 dispatch 할때는 , 다음과 같이 사용한다.&lt;/p&gt;
+
+                &lt;pre&gt;&lt;code&gt;  dispatch(addTodo(text));
+  dispatch(completeTodo(index));
+&lt;/code&gt;&lt;/pre&gt;
+              &lt;/li&gt;
+              &lt;li&gt;bound action creator, connect()키워드, bindActionCreators() 등을 이용해서, action과 dispatch를 bind하여 사용할 수도 있다.&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;h4 id=&quot;reducers&quot;&gt;Reducers&lt;/h4&gt;
+            &lt;ul&gt;
+              &lt;li&gt;reducer를 만들기 전에, state의 shape을 정하는 것이 도움이 된다.&lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;action을 받아서, state의 변화를 주는 pure function&lt;/p&gt;
+
+                &lt;pre&gt;&lt;code&gt;  (previousState, action) =&amp;gt; newState
+&lt;/code&gt;&lt;/pre&gt;
+              &lt;/li&gt;
+              &lt;li&gt;절대 state를 변화시켜서는 안되며, 새로운 state만 계산해서 리턴해야함.&lt;/li&gt;
+              &lt;li&gt;내부에서 side effect를 일으킬 수 있는 routing transition같은 API 를 사용하지 말 것.&lt;/li&gt;
+              &lt;li&gt;switch의 경우 default를 꼭 사용할 것.&lt;/li&gt;
+              &lt;li&gt;es6, 7문법으로 깔끔한 reducer를 만들 수 있다.&lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;ex)&lt;/p&gt;
+
+                &lt;pre&gt;&lt;code&gt;  // es6 - state기본값
+  function todoApp(state = initialState, action) {
+    switch (action.type) {
+    case SET_VISIBILITY_FILTER:
+    	/*
+      return Object.assign({}, state, {
+        visibilityFilter: action.filter
+      });
+      */
+      // es7 - spread syntax
+      return {
+      	...state,
+      	visibilityFilter: action.filter
+      }
+    default:
+      return state;
+    }
+  }
+&lt;/code&gt;&lt;/pre&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;h4 id=&quot;stores&quot;&gt;Stores&lt;/h4&gt;
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;Redux는 단 하나의 Store를 가진다.&lt;/p&gt;
+              &lt;/li&gt;
+              &lt;li&gt;application state를 가지고 있으며, getState()로 접근가능하다.&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;dispatch(action)&lt;/code&gt;으로 state변경을 할 수 있게 해준다.&lt;/li&gt;
+              &lt;li&gt;&lt;code&gt;subscribe(listener)&lt;/code&gt;으로 리스너를 등록한다.&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;h4 id=&quot;redux--&quot;&gt;redux 예제코드 변역&lt;/h4&gt;
+
+            &lt;pre&gt;&lt;code&gt; import { createStore } from &#39;redux&#39;;
+			
+ /*
+ 이것이 리듀서이고, state는 user마음대로 정의할 수 있다. array건, immutable.js오브젝트건 다 된다.
+ 중요한것은, 이 function안에서 state값을 변경해서는 안된다. 새로운 state의 값을 리턴해야한다.
+ */
+ function counter(state = 0, action) {
+   switch (action.type) {
+   case &#39;INCREMENT&#39;:
+     return state + 1;
+   case &#39;DECREMENT&#39;:
+     return state - 1;
+   default:
+     return state;
+   }
+ }
+			
+ // 앱의 state를 갖고있는 스토어 생성
+ // API는 { subscribe, dispatch, getState }.
+ let store = createStore(counter);
+			
+ // You can subscribe to the updates manually, or use bindings to your view layer.
+ store.subscribe(() =&amp;gt;
+   console.log(store.getState())
+ );
+			
+ // The only way to mutate the internal state is to dispatch an action.
+ // The actions can be serialized, logged or stored and later replayed.
+ store.dispatch({ type: &#39;INCREMENT&#39; });
+ // 1
+ store.dispatch({ type: &#39;INCREMENT&#39; });
+ // 2
+ store.dispatch({ type: &#39;DECREMENT&#39; });
+ // 1
+&lt;/code&gt;&lt;/pre&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </content>
   </entry>
   
   <entry>
     <title>React.js + gulp,webpack 환경설정</title>
     <link href="/web/2015/09/01/react-environment-setting"/>
-    <updated>2015-09-01T08:36:00+09:00</updated>
+    <updated>2015-09-01T10:36:00+09:00</updated>
     <id>/web/2015/09/01/react-environment-setting</id>
-    <content type="html">&lt;h1 id=&quot;reactjs--gulp-webpack-&quot;&gt;React.js + gulp, webpack 환경설정&lt;/h1&gt;
-&lt;p&gt;React.js , gulp, webpack 환경설정을 ES6 문법으로 세팅하는 법입니다.&lt;/p&gt;
+    <content type="html">&lt;p&gt;React.js , gulp, webpack 환경설정을 ES6 문법으로 세팅하는 법입니다.&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;설치
@@ -199,6 +678,15 @@
     &lt;/ol&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
+</content>
+  </entry>
+  
+  <entry>
+    <title>포스팅 테스트!</title>
+    <link href="/chat/2015/09/01/the-first-post"/>
+    <updated>2015-09-01T08:36:00+09:00</updated>
+    <id>/chat/2015/09/01/the-first-post</id>
+    <content type="html">&lt;p&gt;스태틱 블로그 개설 테스트&lt;/p&gt;
 </content>
   </entry>
   

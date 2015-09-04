@@ -2,11 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
-        <loc>/chat/2015/09/01/the-first-post</loc>
+        <loc>/web/2015/09/04/react-redux-router-tutorial</loc>
+    </url>
+    
+    <url>
+        <loc>/web/2015/09/04/redux</loc>
     </url>
     
     <url>
         <loc>/web/2015/09/01/react-environment-setting</loc>
+    </url>
+    
+    <url>
+        <loc>/chat/2015/09/01/the-first-post</loc>
     </url>
     
 

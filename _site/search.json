@@ -1,14 +1,26 @@
 [
     
     {
-        "title": "포스팅 테스트!",
-        "url": "/chat/2015/09/01/the-first-post",
-        "date": "Tuesday 1 September 2015"
+        "title": "React.js - Redux - Router 튜토리얼",
+        "url": "/web/2015/09/04/react-redux-router-tutorial",
+        "date": "Friday 4 September 2015"
+    } , 
+    
+    {
+        "title": "Redux 이해",
+        "url": "/web/2015/09/04/redux",
+        "date": "Friday 4 September 2015"
     } , 
     
     {
         "title": "React.js + gulp,webpack 환경설정",
         "url": "/web/2015/09/01/react-environment-setting",
+        "date": "Tuesday 1 September 2015"
+    } , 
+    
+    {
+        "title": "포스팅 테스트!",
+        "url": "/chat/2015/09/01/the-first-post",
         "date": "Tuesday 1 September 2015"
     } 
     

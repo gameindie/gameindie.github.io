@@ -1,17 +1,19 @@
 
-http://mazstudio.github.io/404.html
-http://mazstudio.github.io/about.html
-http://mazstudio.github.io/archive.html
-http://mazstudio.github.io/atom.xml
-http://mazstudio.github.io/categories.html
-http://mazstudio.github.io/feed.xml
-http://mazstudio.github.io/index.html
-http://mazstudio.github.io/rss.xml
-http://mazstudio.github.io/search.html
-http://mazstudio.github.io/search.json
-http://mazstudio.github.io/sitemap.txt
-http://mazstudio.github.io/sitemap.xml
-http://mazstudio.github.io/tags.html
+http://gameindie.github.io/404.html
+http://gameindie.github.io/about.html
+http://gameindie.github.io/archive.html
+http://gameindie.github.io/atom.xml
+http://gameindie.github.io/categories.html
+http://gameindie.github.io/feed.xml
+http://gameindie.github.io/index.html
+http://gameindie.github.io/rss.xml
+http://gameindie.github.io/search.html
+http://gameindie.github.io/search.json
+http://gameindie.github.io/sitemap.txt
+http://gameindie.github.io/sitemap.xml
+http://gameindie.github.io/tags.html
 
-http://mazstudio.github.io/chat/2015/09/01/the-first-post
-http://mazstudio.github.io/web/2015/09/01/react-environment-setting
+http://gameindie.github.io/web/2015/09/04/react-redux-router-tutorial
+http://gameindie.github.io/web/2015/09/04/redux
+http://gameindie.github.io/web/2015/09/01/react-environment-setting
+http://gameindie.github.io/chat/2015/09/01/the-first-post

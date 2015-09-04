@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>React.js + gulp,webpack 환경설정</title>
+	<title>Redux 이해</title>
     
 	
 	<meta name="author" content="Maz">
@@ -157,185 +157,185 @@
 				</div>
 			</div>
 			<div class="journal-body">
-				<h1 class="journal-title">React.js + gulp,webpack 환경설정<span class="author"></span>
+				<h1 class="journal-title">Redux 이해<span class="author"></span>
 				</h1>
 				<span class="the-article">
-				<p>React.js , gulp, webpack 환경설정을 ES6 문법으로 세팅하는 법입니다.</p>
+				<h2 id="redux">Redux</h2>
+<ul>
+  <li>React.js를 접할 때, Flux에 대해서 들어보았을 것이다. Flux는, Facebook 에서 제시한, undirectional data flow를 지향하는 architecture이다. 어떠한 라이브러리를 제공한 것이 아니라, 개념만 제시한 것이다.</li>
+  <li>그래서, Flux 를 구현한 여러 라이브러리가 github에 올라와있는데, Flux자체를 개선시키고, 단순화한 Redux가 인기이다.</li>
+  <li>
+    <p>단순하고, 사용하기 쉽고, async에 대한 대비가 되어있어서 괜찮은 것 같다.</p>
 
-<ol>
-  <li>설치
-    <ul>
-      <li>글로벌
-        <ul>
-          <li>npm : https://github.com/npm/npm</li>
-          <li>gulp : <code>npm install -g gulp</code></li>
-        </ul>
-      </li>
-      <li>프로젝트
-        <ul>
-          <li>npm초기화 : <code>npm init</code></li>
-          <li>gulp 프로젝트에 세팅 : <code>npm install --save-dev gulp</code></li>
-          <li>gitignore : https://github.com/github/gitignore/blob/master/Node.gitignore</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>gulpfile 작성
-    <ul>
-      <li>gulpfile.js 가 필요하다.</li>
-      <li>ES6문법지원을 위하여, gulpfile.babel.js 로 파일을 만든다.</li>
-      <li>babel 설치 : <code>npm install --save-dev babel</code> 
-              <code>npm install --save-dev babel-core</code></li>
-      <li>
-        <p>gulpfile.babel.js 내용작성</p>
-
-        <pre><code>  'use strict';
-		
-  import gulp from 'gulp';
-		
-  //default task 작성
-  gulp.task('default', []);
-</code></pre>
-      </li>
-    </ul>
-  </li>
-  <li>webpack 설정 : 한 단계마다 <code>gulp</code> 명령어를 치면서, 어디가 잘못 되었는지 확인하면서 진행가능.
     <ol>
-      <li>파일/폴더구조 세팅
-        <ul>
-          <li>src/ : 빌드 전 파일들이 위치하는 곳</li>
-          <li>dist/ : 빌드 후 결과물</li>
-        </ul>
-      </li>
-      <li>webpack 설치
-        <ul>
-          <li>gulp-webpack 이름이 webpack-stream으로 변경되었다.</li>
-          <li><code>npm install --save-dev webpack-stream</code></li>
-          <li>webpack에서의 babel loader 적용을 위하여 설치</li>
-          <li><code>npm install --save-dev babel-loader</code></li>
-        </ul>
-      </li>
       <li>
-        <p>webpack.config.js 작성</p>
-
-        <pre><code> 'use strict';
-		
- export default {
-     //시작될 js모듈이름
-     entry: './src/entry',
-     output: {
-     	 // 빌드 후 output js 파일이름
-         filename: 'bundle.js'
-     },
-     module: {
-         loaders: [
-             {
-             	   // load할 파일정규식
-                 test: /\.js$/,
-                 // load제외할 폴더/파일
-                 exclude: /(node_modules)/,
-                 loader: 'babel'
-             }
-         ]
-     }
- };
-</code></pre>
-      </li>
-      <li>
-        <p>gulpfile.babel.js 수정</p>
-
-        <pre><code> 'use strict';
-		
- import gulp from 'gulp';
- import webpack from 'webpack-stream';
- import webpackConfig from './webpack.config';
-		
- // webpack 빌드, output destination 설정
- gulp.task('webpack', () =&gt; {
-     return webpack(webpackConfig).pipe(gulp.dest('./dist'));
- });
-		
- // default task 작성
- gulp.task('default', ['webpack']);
-</code></pre>
-      </li>
-      <li><code>gulp</code></li>
-    </ol>
-  </li>
-  <li>React.js
-    <ol>
-      <li>설치 ( –save-dev 가 아니다! )
- <code>npm install --save react</code>
+        <h3 id="gist">gist</h3>
         <ul>
-          <li>Refusing to install react as a dependency of itself
-            <ul>
-              <li>이와 같은 에러가 났을 떄는, package.json안에 어떤 필드가 ‘react’ 인지 확인하고 수정하면 된다. 필자는 name이 react 라서 문제를 겪었다.</li>
-            </ul>
+          <li>
+            <p>앱의 모~든 state는 store안에 있는 하나의 object tree안에 저장된다.</p>
+          </li>
+          <li>
+            <p>이 state tree를 변화시키는는 유일한 방법은 action을 emit하는 것이다.</p>
+          </li>
+          <li>
+            <p>액션이 어떻게 state tree 변화시키는지를 정의하려면, pure reducers를 작성하면된다.</p>
+          </li>
+          <li>
+            <p>redux는 dispatcher 개념이 없다. event emitter대신에, pure function(reducer)에 의존하고 있기 때문이다.</p>
+          </li>
+          <li>
+            <p>중요) Redux는 사용자가 data를 변경하지 않는다고 가정하고 동작한다. reducer안에서는 반드시 새로운 오브젝트를 리턴해야한다. es7 spread syntax(…)을 이용하면 편하다.</p>
           </li>
         </ul>
       </li>
       <li>
-        <p>테스트를 위한 src/index.html 파일 생성 ( 빌드된 output파일을 load 하도록 작성, 추후 React Component 가 붙을 div 도 생성)</p>
+        <h3 id="actions-reducers-store">Actions, Reducers, Store</h3>
+        <ol>
+          <li>
+            <h4 id="actions">Actions</h4>
+            <ul>
+              <li>App-&gt;Store로 보내는 정보.</li>
+              <li>
+                <p>ex)</p>
 
-        <pre><code> &lt;!DOCTYPE html&gt;
- &lt;html lang="en"&gt;
- &lt;head&gt;
-     &lt;meta charset="UTF-8"&gt;
-     &lt;title&gt;React.js&lt;/title&gt;
- &lt;/head&gt;
- &lt;body&gt;
-     &lt;div id="app"&gt;&lt;/div&gt;
-     &lt;script type="text/javascript" src="bundle.js"&gt;&lt;/script&gt;
- &lt;/body&gt;
- &lt;/html&gt;
+                <pre><code>  // action
+  {
+    type: 'ADD_TODO',
+    text: 'Build my first Redux app'
+  }
 </code></pre>
-      </li>
-      <li>
-        <p>gulpfile.babel.js에 index.html 을 dist 로 복사하는 자동화명령 추가.</p>
+              </li>
+              <li>javascript object와 동일하며, string type의 ‘type’필드는 컨벤션으로 꼭 들어가있어야한다. string contants로 정의되며, 앱이 커지면 모듈로 나눠도 된다.</li>
+              <li>
+                <p>ex)</p>
 
-        <pre><code> 'use strict';
-		
- import gulp from 'gulp';
- import webpack from 'webpack-stream';
- import webpackConfig from './webpack.config';
-		
- gulp.task('copy', () =&gt;  {
-     return gulp.src('./src/index.html').pipe(gulp.dest('./dist'));
- })
-		
- gulp.task('webpack', () =&gt; {
-     return webpack(webpackConfig).pipe(gulp.dest('./dist'));
- });
-		
- // default task 작성
- gulp.task('default', ['copy', 'webpack']);
+                <pre><code>  // actionTypes.js
+  export const ADD_TODO = 'ADD_TODO';
+				
+  // otherfile
+  import { ADD_TODO } from '../actionTypes';
 </code></pre>
-      </li>
-      <li>
-        <p>entry.js에 React.js 테스트코드 작성</p>
+              </li>
+              <li>Action Creators는, action을 만들기 위한 function이다. Flux에서는, action creator안에서 dispatch를 하기때문에, side effect가 발생할 수 있다. Redux는 pure function 이라서, 그런 것이 없다.</li>
+              <li>
+                <p>ex)</p>
 
-        <pre><code> 'use strict';
-		
- import React from 'react';
+                <pre><code>  // action creator
+  function addTodo(text) {
+    return {
+      type: ADD_TODO,
+      text
+    };
+  }
+</code></pre>
+              </li>
+              <li>
+                <p>실제로 dispatch 할때는 , 다음과 같이 사용한다.</p>
+
+                <pre><code>  dispatch(addTodo(text));
+  dispatch(completeTodo(index));
+</code></pre>
+              </li>
+              <li>bound action creator, connect()키워드, bindActionCreators() 등을 이용해서, action과 dispatch를 bind하여 사용할 수도 있다.</li>
+            </ul>
+          </li>
+          <li>
+            <h4 id="reducers">Reducers</h4>
+            <ul>
+              <li>reducer를 만들기 전에, state의 shape을 정하는 것이 도움이 된다.</li>
+              <li>
+                <p>action을 받아서, state의 변화를 주는 pure function</p>
+
+                <pre><code>  (previousState, action) =&gt; newState
+</code></pre>
+              </li>
+              <li>절대 state를 변화시켜서는 안되며, 새로운 state만 계산해서 리턴해야함.</li>
+              <li>내부에서 side effect를 일으킬 수 있는 routing transition같은 API 를 사용하지 말 것.</li>
+              <li>switch의 경우 default를 꼭 사용할 것.</li>
+              <li>es6, 7문법으로 깔끔한 reducer를 만들 수 있다.</li>
+              <li>
+                <p>ex)</p>
+
+                <pre><code>  // es6 - state기본값
+  function todoApp(state = initialState, action) {
+    switch (action.type) {
+    case SET_VISIBILITY_FILTER:
+    	/*
+      return Object.assign({}, state, {
+        visibilityFilter: action.filter
+      });
+      */
+      // es7 - spread syntax
+      return {
+      	...state,
+      	visibilityFilter: action.filter
+      }
+    default:
+      return state;
+    }
+  }
+</code></pre>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <h4 id="stores">Stores</h4>
+            <ul>
+              <li>
+                <p>Redux는 단 하나의 Store를 가진다.</p>
+              </li>
+              <li>application state를 가지고 있으며, getState()로 접근가능하다.</li>
+              <li><code>dispatch(action)</code>으로 state변경을 할 수 있게 해준다.</li>
+              <li><code>subscribe(listener)</code>으로 리스너를 등록한다.</li>
+            </ul>
+          </li>
+          <li>
+            <h4 id="redux--">redux 예제코드 변역</h4>
+
+            <pre><code> import { createStore } from 'redux';
 			
- class HelloWorld extends React.Component {
-     render() {
-         return (
-             &lt;div&gt; Hello World &lt;/div&gt;
-         )
-     }
+ /*
+ 이것이 리듀서이고, state는 user마음대로 정의할 수 있다. array건, immutable.js오브젝트건 다 된다.
+ 중요한것은, 이 function안에서 state값을 변경해서는 안된다. 새로운 state의 값을 리턴해야한다.
+ */
+ function counter(state = 0, action) {
+   switch (action.type) {
+   case 'INCREMENT':
+     return state + 1;
+   case 'DECREMENT':
+     return state - 1;
+   default:
+     return state;
+   }
  }
 			
- React.render(&lt;HelloWorld/&gt;, document.getElementById('app'));
+ // 앱의 state를 갖고있는 스토어 생성
+ // API는 { subscribe, dispatch, getState }.
+ let store = createStore(counter);
+			
+ // You can subscribe to the updates manually, or use bindings to your view layer.
+ store.subscribe(() =&gt;
+   console.log(store.getState())
+ );
+			
+ // The only way to mutate the internal state is to dispatch an action.
+ // The actions can be serialized, logged or stored and later replayed.
+ store.dispatch({ type: 'INCREMENT' });
+ // 1
+ store.dispatch({ type: 'INCREMENT' });
+ // 2
+ store.dispatch({ type: 'DECREMENT' });
+ // 1
 </code></pre>
+          </li>
+        </ol>
       </li>
-      <li><code>gulp</code> 후 확인! Hello World!</li>
     </ol>
   </li>
-</ol>
+</ul>
 
 				</span>
-				<div class="journal-date">Published 01 September 2015</div>
+				<div class="journal-date">Published 04 September 2015</div>
 				<div class="journal-tags">
 				
 				
@@ -352,15 +352,15 @@
 			<div class="tag-r"></div>
 		</a>
 	 
-		<a class="tag-cont" href="/tags.html#gulp,-ref">
+		<a class="tag-cont" href="/tags.html#flux,-ref">
 			<div class="tag-l"></div>
-			<div class="tag-c">gulp,</div>
+			<div class="tag-c">flux,</div>
 			<div class="tag-r"></div>
 		</a>
 	 
-		<a class="tag-cont" href="/tags.html#webpack-ref">
+		<a class="tag-cont" href="/tags.html#redux-ref">
 			<div class="tag-l"></div>
-			<div class="tag-c">webpack</div>
+			<div class="tag-c">redux</div>
 			<div class="tag-r"></div>
 		</a>
 	
