@@ -1,6 +1,6 @@
 ---
 layout: post
-category: 카테고리
+category: web, frontend
 title:  "React.js - Redux - Router 튜토리얼"
 date:   2015-09-04 14:36
 tags: javascript, react, redux, react-router, router 
