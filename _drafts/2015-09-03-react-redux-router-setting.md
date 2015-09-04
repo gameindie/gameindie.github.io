@@ -6,6 +6,7 @@ date:   2015-09-03 10:36
 tags: none 
 comments: true
 ---
+하기 내용은 React 0.13, React-Router 0.13.x, Redux 2.0 기준으로 작성되었다.
 
 1. React-Router
 	1.  설치

@@ -2,7 +2,7 @@
 layout: post
 category: web
 title:  "React.js + gulp,webpack 환경설정"
-date:   2015-09-01 08:36
+date:   2015-09-01 10:36
 tags: javascript, react, gulp, webpack
 comments: true
 ---
